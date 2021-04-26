@@ -16,6 +16,8 @@ import org.d3if2085.hitungbmi.R
 import org.d3if2085.hitungbmi.data.KategoriBmi
 import org.d3if2085.hitungbmi.databinding.FragmentHitungBinding
 import org.d3if2085.hitungbmi.db.BmiDb
+import org.d3if2085.hitungbmi.ui.histori.HistoriViewModel
+import org.d3if2085.hitungbmi.ui.histori.HistoriViewModelFactory
 
 
 class HitungFragment : Fragment()  {
@@ -25,7 +27,6 @@ class HitungFragment : Fragment()  {
         ViewModelProvider(this, factory).get(HitungViewModel::class.java)
     }
     private lateinit var binding: FragmentHitungBinding
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -65,10 +66,7 @@ class HitungFragment : Fragment()  {
             binding.kategoriTextView.text = getString(R.string.kategori_x, getKategori(it.kategori))
             binding.buttonGroup.visibility = View.VISIBLE
         })
-        viewModel.data.observe(viewLifecycleOwner, {
-            if (it == null) return@observe
-            Log.d("HitungFragment", "Data tersimpan. ID = ${it.id}")
-        })
+
         viewModel.getNavigasi().observe(viewLifecycleOwner, {
             if (it == null) return@observe
             findNavController().navigate(HitungFragmentDirections.actionHitungFragmentToSaranFragment(it))
